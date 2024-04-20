@@ -97,9 +97,12 @@ class Patient:
 		}
 
 		# TODO: fix the rest of the code
-		existing_patient = requests.get(API_CONTROLLER_URL + "/patients/" + self.patient_id)
+		response = requests.get(API_CONTROLLER_URL + "/patients/" + self.patient_id)
+		patient_exist = None
+		if response.status_code == 200:
+			patient_exist = response.json()["patient"]["patient_id"] == self.patient_id
 
-		if existing_patient:
+		if patient_exist:
 			response = requests.put(API_CONTROLLER_URL + "/patients/" + self.patient_id, json=payload)
 			if response.status_code == 200:
 				print("Successfully updated the patient: ", self.patient_id)

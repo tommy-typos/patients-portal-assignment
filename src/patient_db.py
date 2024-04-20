@@ -131,7 +131,12 @@ class PatientDB:
             )
             result = conn.execute(stmt)
             keys = result.keys()
+            print("num of keys::::", result.keys())
             values = result.fetchone()
+            # fix
+            if values is None:
+                return None
+            # endfix
             patient = self.row_to_dict(keys, values)
             return patient
         except SQLAlchemyError as e:

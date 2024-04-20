@@ -8,7 +8,7 @@ uri = "http://127.0.0.1:5000"
 def get_patient_by_id(uri, id):
     uri = f"{uri}/patients/{id}"
     response = requests.get(uri)
-    return response.json()
+    return response.json()["patient"]
 
 def test_one():
     try:
