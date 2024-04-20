@@ -50,6 +50,21 @@ def delete_patient():
 	response = requests.delete(uri)
 	print('DELETE PATIENT response:::', response.json())
 
+
+# ************ update patient
+def update_patient():
+	payload = {
+		"patient_name": "test-patient_2",
+		"patient_checkout": "26-april-2023",
+		"patient_ward": "3",
+		"patient_room": "35"
+	}
+
+	uri = "http://127.0.0.1:5000/patient/30ed4a02-40e0-40a5-a939-e7f38a81acac"
+
+	response = requests.put(uri, json=payload)
+	print('UPDATE PATIENT response:::', response.json())
+
 # **************************************************************
 # **************************************************************
 # **************************************************************
@@ -61,6 +76,9 @@ def delete_patient():
 hello_world()
 all_patients()
 spesific_patient()
+# delete_patient()
+create_patient()
 # create_patient()
-delete_patient()
-# create_patient()
+
+update_patient()
+spesific_patient()

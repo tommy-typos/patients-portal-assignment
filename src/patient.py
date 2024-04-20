@@ -85,30 +85,38 @@ class Patient:
 		return self.patient_room
 
 	def commit(self):
-		payload = {
-			"patient_id": self.patient_id,
-			"patient_name": self.patient_name,
-			"patient_age": self.patient_age,
-			"patient_gender": self.patient_gender,
-			"patient_checkin": self.patient_checkin,
-			"patient_checkout": self.patient_checkout,
-			"patient_ward": self.patient_ward,
-			"patient_room": self.patient_room
-		}
-
-		# TODO: fix the rest of the code
 		response = requests.get(API_CONTROLLER_URL + "/patients/" + self.patient_id)
 		patient_exist = None
+
 		if response.status_code == 200:
 			patient_exist = response.json()["patient"]["patient_id"] == self.patient_id
 
 		if patient_exist:
-			response = requests.put(API_CONTROLLER_URL + "/patients/" + self.patient_id, json=payload)
+			payload = {
+				"patient_name": self.patient_name,
+				"patient_age": self.patient_age,
+				"patient_gender": self.patient_gender,
+				"patient_checkin": self.patient_checkin,
+				"patient_checkout": self.patient_checkout,
+				"patient_ward": self.patient_ward,
+				"patient_room": self.patient_room
+			}
+			response = requests.put(API_CONTROLLER_URL + "/patient/" + self.patient_id, json=payload)
 			if response.status_code == 200:
 				print("Successfully updated the patient: ", self.patient_id)
 			else:
 				print("Failed to update the patient: ", self.patient_id)
 		else:
+			payload = {
+				"patient_id": self.patient_id,
+				"patient_name": self.patient_name,
+				"patient_age": self.patient_age,
+				"patient_gender": self.patient_gender,
+				"patient_checkin": self.patient_checkin,
+				"patient_checkout": self.patient_checkout,
+				"patient_ward": self.patient_ward,
+				"patient_room": self.patient_room
+			}
 			response = requests.post(API_CONTROLLER_URL + "/patients", json=payload)
 			if response.status_code == 200:
 				print("Successfully created a new patient: ", self.patient_id)
